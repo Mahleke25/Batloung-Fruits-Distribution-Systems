@@ -1,14 +1,15 @@
+
 import { useEffect, useState } from 'react';
 import './App.css';
 
-import Fruits from './pages/Fruits';
-import BoxSizes from './pages/BoxSizes';
+import Fruits from './pages/fruits';
+import BoxSizes from './pages/boxSizes';
 import Suppliers from './pages/suppliers';
 import Vendors from './pages/vendors';
 import Products from './pages/products';
 import Purchases from './pages/purchases';
-import Orders from './pages/Orders';
-import Reports from './pages/Reports';
+import Orders from './pages/orders';
+import Reports from './pages/reports';
 
 import {
   getFruits,
@@ -25,7 +26,7 @@ const navigation = [
   { id: 'boxsizes', label: 'Packaging sizes', icon: '▣', group: 'INVENTORY' },
   { id: 'purchases', label: 'Inventory', icon: '↙', group: 'OPERATIONS' },
   { id: 'suppliers', label: 'Our suppliers', icon: '🚚', group: 'OPERATIONS' },
-  { id: 'vendors', label: 'Street vendors', icon: '🏪', group: 'OPERATIONS' },
+  { id: 'vendors', label: 'Street vendors', icon: '🪴', group: 'OPERATIONS' },
   { id: 'orders', label: 'Customer orders', icon: '≡', group: 'OPERATIONS' },
   { id: 'reports', label: 'Business reports', icon: '↗', group: 'INSIGHTS' }
 ];
@@ -39,10 +40,10 @@ const emptyCounts = {
 };
 
 const summaryCards = [
-  { key: 'fruits', label: 'Fruit varieties', color: 'lime', icon: '🍏', note: 'In the catalogue' },
+  { key: 'fruits', label: 'Fruit varieties', color: 'lime', icon: '🍎', note: 'In the catalogue' },
   { key: 'products', label: 'Products listed', color: 'orange', icon: '🍊', note: 'Available product types' },
-  { key: 'suppliers', label: 'Trusted suppliers', color: 'pink', icon: '🍓', note: 'Supply partners' },
-  { key: 'vendors', label: 'Registered vendors', color: 'purple', icon: '🍇', note: 'Market customers' },
+  { key: 'suppliers', label: 'Trusted suppliers', color: 'pink', icon: '📦', note: 'Supply partners' },
+  { key: 'vendors', label: 'Registered vendors', color: 'purple', icon: '🇱🇸', note: 'Market customers' },
   { key: 'purchases', label: 'Stock purchases', color: 'blue', icon: '🧺', note: 'Recorded deliveries' }
 ];
 
@@ -53,7 +54,7 @@ function App() {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [mobileMenu, setMobileMenu] = useState(false);
-  
+
   async function loadDashboard() {
     setLoading(true);
     setError('');
@@ -107,6 +108,7 @@ function App() {
   }
 
   const currentPage = navigation.find((item) => item.id === page);
+
   const filteredNavigation = navigation.filter((item) =>
     item.label.toLowerCase().includes(search.toLowerCase())
   );
@@ -116,13 +118,27 @@ function App() {
       <div className="fresh-dashboard">
         <section className="market-hero">
           <div className="hero-copy">
-            <span className="eyebrow"><span className="live-dot" /> YOUR DAILY MARKET SNAPSHOT</span>
-            <h1>Fresh ideas.<br /><span>Better business.</span></h1>
-            <p>Your produce, partners and stock records — all in one fresh place.</p>
-            <button className="hero-button" onClick={() => navigate('products')}>
+            <span className="eyebrow">
+              <span className="live-dot" /> YOUR DAILY MARKET SNAPSHOT
+            </span>
+
+            <h1>
+              Fresh ideas.<br />
+              <span>Better business.</span>
+            </h1>
+
+            <p>
+              Your produce, partners and stock records — all in one fresh place.
+            </p>
+
+            <button
+              className="hero-button"
+              onClick={() => navigate('products')}
+            >
               Explore products <span>↗</span>
             </button>
           </div>
+
           <div className="hero-art" aria-hidden="true">
             <span className="fruit-orbit orbit-one">🍊</span>
             <span className="fruit-orbit orbit-two">🍋</span>
@@ -132,6 +148,7 @@ function App() {
             <span className="art-spark spark-one">✳</span>
             <span className="art-spark spark-two">✦</span>
           </div>
+
           <div className="hero-index">BATLOUNG / MARKET 001</div>
         </section>
 
@@ -141,8 +158,14 @@ function App() {
             <h2>Your market at a glance</h2>
             <p>Live totals from your connected records.</p>
           </div>
-          <button className="refresh-button" onClick={loadDashboard} disabled={loading}>
-            <span>{loading ? '◌' : '↻'}</span> {loading ? 'Updating...' : 'Refresh figures'}
+
+          <button
+            className="refresh-button"
+            onClick={loadDashboard}
+            disabled={loading}
+          >
+            <span>{loading ? '◌' : '↻'}</span>
+            {loading ? 'Updating...' : 'Refresh figures'}
           </button>
         </div>
 
@@ -160,10 +183,13 @@ function App() {
                 <span className="stat-icon">{card.icon}</span>
                 <span className="stat-arrow">↗</span>
               </div>
+
               <span className="stat-label">{card.label}</span>
+
               <strong className="stat-number">
                 {loading ? '—' : counts[card.key].length}
               </strong>
+
               <span className="stat-note">{card.note}</span>
               <span className="stat-decoration" />
             </button>
@@ -172,14 +198,36 @@ function App() {
 
         <div className="dashboard-bottom">
           <section className="welcome-panel">
-            <span className="section-kicker">A LITTLE ORGANISATION GOES A LONG WAY</span>
+            <span className="section-kicker">
+              A LITTLE ORGANISATION GOES A LONG WAY
+            </span>
+
             <h2>Keep the market moving.</h2>
-            <p>Record incoming stock, maintain your supplier details, and keep your catalogue up to date.</p>
+
+            <p>
+              Record incoming stock, maintain your supplier details, and keep
+              your catalogue up to date.
+            </p>
+
             <div className="welcome-actions">
-              <button className="action-primary" onClick={() => navigate('purchases')}>＋ Record a purchase</button>
-              <button className="action-secondary" onClick={() => navigate('fruits')}>Browse fruits ↗</button>
+              <button
+                className="action-primary"
+                onClick={() => navigate('purchases')}
+              >
+                ＋ Record a purchase
+              </button>
+
+              <button
+                className="action-secondary"
+                onClick={() => navigate('fruits')}
+              >
+                Browse fruits ↗
+              </button>
             </div>
-            <div className="panel-decoration">FRESH<br />EVERY DAY.</div>
+
+            <div className="panel-decoration">
+              FRESH<br />EVERY DAY.
+            </div>
           </section>
 
           <section className="activity-panel">
@@ -188,20 +236,28 @@ function App() {
                 <span className="section-kicker">QUICK ACCESS</span>
                 <h2>Where to next?</h2>
               </div>
+
               <span className="activity-symbol">✳</span>
             </div>
+
             {[
               ['fruits', '🍎', 'Fruit catalogue', 'Manage your fruit varieties'],
               ['suppliers', '🚚', 'Supplier directory', 'View your supply partners'],
-              ['vendors', '🏪', 'Vendor directory', 'Manage registered vendors'],
+              ['vendors', '🪴', 'Vendor directory', 'Manage registered vendors'],
               ['reports', '📊', 'Business reports', 'Review your business records']
             ].map(([id, icon, title, description]) => (
-              <button className="quick-link" key={id} onClick={() => navigate(id)}>
+              <button
+                className="quick-link"
+                key={id}
+                onClick={() => navigate(id)}
+              >
                 <span className="quick-icon">{icon}</span>
+
                 <span className="quick-copy">
                   <strong>{title}</strong>
                   <small>{description}</small>
                 </span>
+
                 <span className="quick-arrow">↗</span>
               </button>
             ))}
@@ -209,7 +265,7 @@ function App() {
         </div>
 
         <footer className="market-footer">
-          <span>🍃 BATLOUNG FRUITS</span>
+          <span>🌿 BATLOUNG FRUITS</span>
           <span>Growing good business, one delivery at a time.</span>
         </footer>
       </div>
@@ -218,53 +274,87 @@ function App() {
 
   function renderPage() {
     switch (page) {
-      case 'fruits': return <Fruits />;
-      case 'boxsizes': return <BoxSizes />;
-      case 'suppliers': return <Suppliers />;
-      case 'vendors': return <Vendors />;
-      case 'products': return <Products />;
-      case 'purchases': return <Purchases />;
-      case 'orders': return <Orders />;
-      case 'reports': return <Reports />;
-      default: return renderDashboard();
+      case 'fruits':
+        return <Fruits />;
+
+      case 'boxsizes':
+        return <BoxSizes />;
+
+      case 'suppliers':
+        return <Suppliers />;
+
+      case 'vendors':
+        return <Vendors />;
+
+      case 'products':
+        return <Products />;
+
+      case 'purchases':
+        return <Purchases />;
+
+      case 'orders':
+        return <Orders />;
+
+      case 'reports':
+        return <Reports />;
+
+      default:
+        return renderDashboard();
     }
   }
 
   return (
-
-  
-
     <div className="fresh-app">
       <aside className={`fresh-sidebar ${mobileMenu ? 'sidebar-open' : ''}`}>
-        <button className="brand-lockup" onClick={() => navigate('dashboard')}>
-          <span className="brand-mark">B<span>+</span></span>
+        <button
+          className="brand-lockup"
+          onClick={() => navigate('dashboard')}
+        >
+          <span className="brand-mark">
+            B<span>+</span>
+          </span>
+
           <span className="brand-words">
-            <strong>Batloung<span>Fruits</span></strong>
+            <strong>
+              Batloung<span>Fruits</span>
+            </strong>
             <small>FRESH MARKET SYSTEM</small>
           </span>
         </button>
 
         <div className="sidebar-market-tag">
-          <span>🍃</span>
-          <span><strong>Market operations</strong><small>Everything growing well.</small></span>
+          <span>🌿</span>
+          <span>
+            <strong>Market operations</strong>
+            <small>Everything growing well.</small>
+          </span>
         </div>
 
         {['MAIN', 'INVENTORY', 'OPERATIONS', 'INSIGHTS'].map((group) => {
-          const items = filteredNavigation.filter((item) => item.group === group);
+          const items = filteredNavigation.filter(
+            (item) => item.group === group
+          );
+
           if (!items.length) return null;
 
           return (
             <div className="nav-group" key={group}>
               <p className="nav-group-label">{group}</p>
+
               {items.map((item) => (
                 <button
                   key={item.id}
-                  className={`nav-item ${page === item.id ? 'nav-active' : ''}`}
+                  className={`nav-item ${
+                    page === item.id ? 'nav-active' : ''
+                  }`}
                   onClick={() => navigate(item.id)}
                 >
                   <span className="nav-icon">{item.icon}</span>
                   <span>{item.label}</span>
-                  {page === item.id && <span className="nav-active-dot" />}
+
+                  {page === item.id && (
+                    <span className="nav-active-dot" />
+                  )}
                 </button>
               ))}
             </div>
@@ -272,7 +362,7 @@ function App() {
         })}
 
         <div className="sidebar-bottom">
-          <div className="sidebar-fruit-art">🍓 🍋 🍇</div>
+          <div className="sidebar-fruit-art">🍎 🍋 🍇</div>
           <strong>Keep it fresh.</strong>
           <p>Good records grow good business.</p>
           <span className="version-tag">FRESH MARKET · V1.0</span>
@@ -290,24 +380,46 @@ function App() {
       <main className="fresh-main">
         <header className="topbar">
           <div className="topbar-left">
-            <button className="mobile-menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Toggle navigation">☰</button>
+            <button
+              className="mobile-menu-button"
+              onClick={() => setMobileMenu(!mobileMenu)}
+              aria-label="Toggle navigation"
+            >
+              ☰
+            </button>
+
             <div className="breadcrumb">
-              <span>BATLOUNG FRUITS</span><span className="breadcrumb-slash">/</span>
+              <span>BATLOUNG FRUITS</span>
+              <span className="breadcrumb-slash">/</span>
               <strong>{currentPage?.label || 'Market overview'}</strong>
             </div>
           </div>
+
           <div className="topbar-right">
             <label className="nav-search">
               <span>⌕</span>
+
               <input
                 type="search"
                 placeholder="Find a page..."
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
-              {search && <button onClick={() => setSearch('')} aria-label="Clear search">×</button>}
+
+              {search && (
+                <button
+                  onClick={() => setSearch('')}
+                  aria-label="Clear search"
+                >
+                  ×
+                </button>
+              )}
             </label>
-            <div className="market-status"><span className="live-dot" /> Market desk</div>
+
+            <div className="market-status">
+              <span className="live-dot" /> Market desk
+            </div>
+
             <div className="profile-mark">BF</div>
           </div>
         </header>
